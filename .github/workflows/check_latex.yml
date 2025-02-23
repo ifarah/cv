@@ -7,19 +7,21 @@ on:
   pull_request:
     paths-ignore:
       - "README.md"
-      
 jobs:
-  build:
+  build_latex:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Compile LaTex document
-        uses: xu-cheng/latex-action@v2
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build PDF
+        uses: xu-cheng/latex-action@v3
         with:
           root_file: main_cv.tex
-      - name: Upload PDF file
-        uses: actions/upload-artifact@v4
+
+      - name: Publish PDF
+        uses: appleboy/scp-action@v0.1.7
         with:
           name: PDF
           path: main_cv.pdf

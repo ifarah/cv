@@ -1,0 +1,366 @@
+\documentclass[12pt,letterpaper]{report}
+
+\usepackage[T1]{fontenc} % output T1 font encoding (8-bit) for accented characters as single glyph
+\usepackage[strict,autostyle]{csquotes} % smart and nestable quote marks
+\usepackage[USenglish]{babel} % regionalize hyphens, quote marks, etc automatically
+\usepackage{microtype}% improve text appearance with kerning, etc
+\usepackage{datetime} % enable formatting of date output
+\usepackage{tabto}    % make nice tabbing
+\usepackage{hyperref} % enable hyperlinks and pdf metadata
+\usepackage{geometry} % manually set page margins
+\usepackage{enumitem} % enumerate with [resume] option
+\usepackage{titlesec} % allow custom section fonts
+\usepackage{setspace} % custom line spacing
+\usepackage{xcolor}
+\usepackage[maxcitenames=20, minnames=3 ]{biblatex}
+\addbibresource[]{biblio.bib}
+
+% bold the name of specific author
+\usepackage{xstring}
+\usepackage{etoolbox}
+\newboolean{bold}
+\newcommand{\makeauthorsbold}[1]{%
+  \DeclareNameFormat{author}{%
+  \setboolean{bold}{false}%
+    \renewcommand{\do}[1]{\expandafter\ifstrequal\expandafter{\namepartfamily}{####1}{\setboolean{bold}{true}}{}}%
+    \docsvlist{#1}%
+    \ifthenelse{\value{listcount}=1}
+    {%
+      {\expandafter\ifthenelse{\boolean{bold}}{\mkbibbold{\namepartfamily\addcomma\addspace \namepartgiveni}}{\namepartfamily\addcomma\addspace \namepartgiveni}}%
+    }{\ifnumless{\value{listcount}}{\value{liststop}}
+      {\expandafter\ifthenelse{\boolean{bold}}{\mkbibbold{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni}}{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni}}%
+      {\expandafter\ifthenelse{\boolean{bold}}{\mkbibbold{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni\addcomma\isdot}}{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni\addcomma\isdot}}%
+      }
+    \ifthenelse{\value{listcount}<\value{liststop}}
+    {\addcomma\space}{}
+  }
+}
+\makeauthorsbold{Farah, Irene}
+
+% what is your name?
+\newcommand{\myname}{Irene Farah}
+
+% select default typefaces
+\usepackage{ebgaramond} % document's serif typeface
+\usepackage{tgheros}    % document's sans serif typeface
+
+% how far to tab for list items with left-aligned date: different fonts need different widths
+\newcommand{\listtabwidth}{1.7cm}
+
+% define font to use as document's title
+\newcommand{\namefont}[1]{{\normalfont\bfseries\Huge{#1}}}
+
+% set section heading fonts and before/after spacing
+\SetTracking{encoding=*, family=\sfdefault}{30} % increase sans serif headings tracking
+\titleformat{\section}{\lsstyle\sffamily\small\bfseries\uppercase}{}{}{}{}
+\titlespacing{\section}{0pt}{30pt plus 4pt minus 4pt}{8pt plus 2pt minus 2pt}
+
+% set subsection heading fonts and before/after spacing
+\titleformat{\subsection}{\lsstyle\sffamily\footnotesize\bfseries}{}{}{}{}
+\titlespacing{\subsection}{0pt}{16pt plus 4pt minus 4pt}{4pt plus 2pt minus 2pt}
+
+% set page margins (assumes letter paper)
+\geometry{body={6.5in, 9.0in},
+    left=1.0in,
+    top=1.0in}
+
+% prevent paragraph indentation
+\setlength\parindent{0em}
+
+% set line spacing
+\setstretch{0.8}
+
+% define space between list items
+\newcommand{\listitemspace}{0.25em}
+
+% make unordered lists without bullets and use compact spacing
+\renewenvironment{itemize}
+{\begin{list}{}{\setlength{\leftmargin}{0em}
+                \setlength{\parskip}{0em}
+                \setlength{\itemsep}{\listitemspace}
+                \setlength{\parsep}{\listitemspace}}}
+{\end{list}}
+
+% make tabbed lists so content is left-aligned next to years
+\TabPositions{\listtabwidth}
+\newlist{tablist}{description}{3}
+\setlist[tablist]{leftmargin=\listtabwidth,
+    labelindent=0em,
+    topsep=0em,
+    partopsep=0em,
+    itemsep=\listitemspace,
+    parsep=\listitemspace,
+    font=\normalfont}
+
+% print only the month and year when using \today
+\newdateformat{monthyeardate}{\monthname[\THEMONTH] \THEYEAR}
+
+% define hyperlink appearance and metadata for pdf properties
+\hypersetup{
+    colorlinks  = true,
+    urlcolor    = black,
+    citecolor   = black,
+    linkcolor   = black,
+    pdfauthor   = {\myname},
+    pdfkeywords = {Urban Politics, Informality, Food Systems, Methods},
+    pdftitle    = {\myname: Curriculum Vitae},
+    pdfsubject  = {Curriculum Vitae},
+    pdfpagemode = UseNone
+}
+
+\begin{document}
+    % \nobibliography*
+    \raggedright{}
+
+    % display your name as the document title
+    \namefont{\myname}
+
+    % affiliation and contact info blocks
+    \vspace{1em}
+    \begin{minipage}[t]{0.700\textwidth}
+        % current primary affiliation, left-aligned
+        %Assistant Professor \\
+        Department of Urban and Regional Science \\
+        University of Illinois, Urbana-Champaign \\
+       312 Temple Buell Hall, 611 E. Lorado Taft Drive, Champaign, IL 61820
+    
+    \end{minipage}
+    \begin{minipage}[t]{0.295\textwidth}
+        % contact info details, right-aligned
+        \flushright{}
+        \href{mailto:irenef@berkeley.edu}{irenef@illinois.edu} \\
+        +1 773 717 3517 \\
+        \href{https://ifarah.github.io}{ifarah.github.io}\\
+        %\href{https://orcid.org/0000-0003-0227-9896}{orcid:0000-0003-0227-9896}
+    \end{minipage}
+
+    \section*{Education}
+    
+    \begin{tablist}
+      \item[Ph.D.] \tab{}\textbf{City \& Regional Planning}, University of California, Berkeley, USA, 2019-2024 \\
+\vspace{.15cm}
+\color{gray}
+      %Dissertation: \textit{The Scramble for the City: Street Vending, Politics, and the Governance of Public Space in Mexico City and San Francisco} \\
+      %Committee: Daniel Rodríguez (co‑chair), Alison Post (co‑chair), and Carolina Reid
+\color{black}
+      \item[M.A.] \tab{}\textbf{Social Sciences}, University of Chicago, Illinois, USA, 2016-2017 \\
+\color{gray}
+\vspace{.15cm}
+      %Thesis: \textit{A Geospatial Analysis of Mexico’s Distal Effects on Food Insecurity} \\
+      %Advisor: Luc Anselin
+      \color{black}
+      \item[B.A.] \tab{}\textbf{Political Science}, Instituto Tecnológico Autónomo de México (ITAM), Mexico City, Mexico, 2009-2013 \\
+\color{gray}
+\vspace{.15cm}
+        %Thesis: \textit{Social Mobility of Women in Technical Schools in Mexico} \\
+        %Advisor: Vidal Romero
+    \end{tablist}
+
+    \section*{Academic Appointments}
+    \begin{tablist}
+       \item[2025] \quad{}Assistant Professor, Department of  \textbf{Urban and Regional Planning}, University of Illinois at Urbana-Champaign (UIUC).  \textit{Starting in August}\\ 
+       \item[2024] \quad{} Illinois Distinguished Postdoctoral Research Associate, Department of \textbf{Urban and Regional Planning}, University of Illinois at Urbana-Champaign (UIUC)
+       \end{tablist}
+
+
+    
+    \section*{Research Areas}
+    \begin{itemize}
+    \item My research focuses on \textbf{urban governance, informality,} and \textbf{spatial dynamics}.
+    \subitem \textbf{Urban Governance:} With a particular focus on political intermediation and coordination between \\ 
+    \hspace{1.5em} 
+    multiple scales of government, I examine how bureaucracies, nonprofits, and other actors implement  \\
+    \hspace{1.5em} laws, and shape access to public services.
+    \subitem \textbf{Spatial Dynamics:} Using computational and spatial techniques, I also examine informality and the \\
+    \hspace{1.5em} ways people inhabit urban space, retail dynamics and its impact in the food system.
+    \end{itemize}
+    
+    \section*{Research Experience}
+    \begin{tablist}
+        \item[2019‐2020] \quad{}Graduate Researcher, \textbf{Institute of Urban and Regional Development}, UC Berkeley
+        \item[2016‐2019] \quad{}Research Associate, \textbf{Center for Spatial Data Science}, University of Chicago
+        \item[2014‐2015] \quad{}Research Advisor, \textbf{National Council for the Evaluation of Social Development Policy \\
+        \hspace{1em}(CONEVAL)}, Mexico City
+    \end{tablist}
+
+    \section*{Publications}
+    \subsection*{Peer-Reviewed Journal Articles}
+    \begin{tablist}
+        %\item[2024] \tab{}\fullcite{diss}
+        \item[2025] \tab{}\fullcite{bmc2025} 
+        \item[2023] \tab{}\fullcite{heat2023}
+        \item[2023] \tab{}\fullcite{frontiers}
+        \item[2022] \tab{}\fullcite{phn} 
+    \end{tablist}
+
+    \subsection*{Book Chapters}
+    \begin{tablist}  
+        \item[2025] \tab{}\fullcite{tianafood}
+        \item[2023] \tab{}\fullcite{anselinretail}
+        \item[2023] \tab{}\fullcite{kevinretail}
+    \end{tablist}
+
+    \subsection*{Book Reviews and Miscellanea}
+    \begin{tablist}  
+        \item[2021] \tab{}\fullcite{holland2021}
+        \item[2019] \tab{}\fullcite{access2019}
+        \item[2018] \tab{}\fullcite{meth2018}
+    \end{tablist}
+
+    %\subsection*{Under Revision and In Preparation}
+    %\begin{tablist}  
+    %    \item[2024] \tab{}\fullcite{kevinretail}
+    %\end{tablist}
+    
+    \section*{Teaching}
+    \subsection*{University of California, Berkeley}
+    \begin{tablist}
+        \item[2022] \tab{}$\>$ $\>$ $\>$ Planning Methods Gateway: Part I (graduate), Graduate Student Instructor.
+        \item[2022] \tab{}$\>$ $\>$ $\>$ Maps as Social Justice Interventions, Instructor and created course with Karen Chapple.
+        \item[2021, 2022] $\>$ $\>$  R Geospatial and US Census, Workshops. D‐Lab.
+        \item[2020, 2022] $\>$ $\>$  Urban Informatics and Visualization (graduate), Graduate Student Instructor.
+        \item[2021] \tab{} $\>$ $\>$ $\>$  Introduction to City Planning, Graduate Student Instructor.
+        \item[2021] \tab{} $\>$ $\>$ $\>$  Introduction to Urban Data Analytics, Graduate Student Instructor.
+    \end{tablist}
+    
+    \subsection*{Colegio de México}
+        \begin{tablist}
+        \item[2023, 2022] $\>$ $\>$Introduction to Spatial Econometrics (graduate, in Spanish).
+    \end{tablist}
+
+    
+
+    %\subsection*{Conference Proceedings}
+    %\begin{tablist}
+    %    \item[2022] \tab{}\fullcite{luo2022abode-net}
+    %    \item[2021] \tab{}\fullcite{li2021deep}
+    %\end{tablist}
+
+    % \section*{INVITED TALKS}
+    % \subsection*{Campus Talks}
+
+    \section*{Selected Presentations}
+    \small{(*) = Invited} \\
+    \begin{tablist}
+        \item[2024] \tab{}\fullcite{apsaluskin2024}
+        \item[2024] \tab{}\fullcite{acsp2024}
+        \item[2024] \tab{}\fullcite{lasa2024}
+        \item[2024] \tab{}\fullcite{uaa2024}
+        \item[2023*] \tab{}\fullcite{scramblemich}
+        \item[2023] \tab{}\fullcite{apsaluskin2023}
+        \item[2023] \tab{}\fullcite{acsp2023}
+        \item[2023] \tab{}\fullcite{mov2023}
+        \item[2023] \tab{}\fullcite{uaa2023}
+        \item[2022] \tab{}\fullcite{acsp2022}
+        \item[2022] \tab{}\fullcite{apsa2022}
+        \item[2020] \tab{}\fullcite{acsp2020}
+        \item[2019] \tab{}\fullcite{aag2019}
+        \item[2019] \tab{}\fullcite{wrsa2019}
+        \item[2018] \tab{}\fullcite{narsc2018}
+        \item[2015] \tab{}\fullcite{hdca2015}
+    \end{tablist}
+
+
+    
+    
+    %\section*{Conference Activity}
+    %\begin{tablist}
+    %    \item[2022] \tab{}The 7th International Conference on Smart Computing and Communication (SmartCom 2022), New York, USA
+    %    \item[2022] \tab{}NSF EPSCoR Workshop on Artificial Intelligence \& No-Boundary Thinking, Little Rock, Arkansa
+    %\end{tablist}
+
+%    \section*{Awards}
+%    \subsection*{Awards and Honors}
+%    \begin{tablist}
+%        \item[2023‐2024] $\>$  $\>$ Political Economy Network Fellow, Network for a New Political Economy, UC Berkeley 
+%        \item[2022‐2023] $\>$ $\>$  Graduate Student Fellow, Institute for the Study of Societal Issues, UC Berkeley
+%        \item[2022     ] \tab{}$\>$$\>$ $\>$  Outstanding Graduate Student Instructor Award, UC Berkeley
+%        \item[2022     ] \tab{}$\>$ $\>$   Michael B. Teitz Fellowship, UC Berkeley 
+%        \item[2021‐2022] $\>$ $\>$  Graduate Student Fellow, Berkeley Food Institute, UC Berkeley
+%        \item[2021‐2022] $\>$ $\>$ Graduate Student Fellow, D‐Lab, UC Berkeley
+%        \item[2021     ] \tab{}$\>$$\>$ $\>$  Tinker Field Research Grant, CLAS, UC Berkeley
+%        \item[2020     ] \tab{}$\>$ $\>$ $\>$ Summer Research Grant, Global Metropolitan Studies, UC Berkeley
+%        \item[2019     ] \tab{}$\>$$\>$ $\>$  Outstanding Reviewer, Housing Policy Debate
+%        \item[2016     ] \tab{}$\>$$\>$ $\>$  Fellowship, University of Chicago
+%        \item[2013     ] \tab{}$\>$$\>$  $\>$ Award La Flecha Al Aire for BA thesis on education,
+%        \item[2013     ] \tab{}$\>$ $\>$  Scholarship on Social Mobility Research, Centro de Estudios Espinosa Yglesias
+%    \end{tablist}
+
+
+    \section*{Awards}
+    \subsection*{Awards and Honors}
+    \begin{tablist}
+        \item[2024] \quad{}Political Economy Network Fellow, Network for a New Political Economy, UC Berkeley 
+        \item[2023] \quad{}Graduate Student Fellow, Institute for the Study of Societal Issues, UC Berkeley
+        \item[2023] \quad{} Student Travel Scholarship, ACSP
+        \item[2022] \quad{}Outstanding Graduate Student Instructor Award, UC Berkeley
+        \item[2022] \quad{}Michael B. Teitz Fellowship, UC Berkeley 
+        \item[2021] \quad{}Graduate Student Fellow, Berkeley Food Institute, UC Berkeley
+        \item[2021] \quad{}Graduate Student Fellow, D‐Lab, UC Berkeley
+        \item[2021] \quad{}Tinker Field Research Grant, CLAS, UC Berkeley
+        \item[2020] \quad{}Summer Research Grant, Global Metropolitan Studies, UC Berkeley
+        \item[2019] \quad{}Outstanding Reviewer, Housing Policy Debate
+        \item[2016] \quad{}Fellowship, University of Chicago
+        \item[2015] \quad{}Award \textit{La Flecha Al Aire} for BA thesis on education, ITAM
+        \item[2013] \quad{}Scholarship on Social Mobility Research, Centro de Estudios Espinosa Yglesias (CEEY), Mexico
+    \end{tablist}
+    
+    \section*{Academic Service}
+    \subsection*{Sessions Organized}
+    \begin{tablist}
+        \item[2024] \tab{}Co-organizer: Housing and Land Regulations in the Political Economy of Urban Latin America. Five sessions. \textbf{Association of Collegiate Schools of Planning}, Seattle, Washington (with Flávia Leite).
+        \item[2024] \tab{}Co-organizer: Urban Governance of Informal Work: Perspectives Across the North-South Divide. Five sessions. \textbf{Urban Affairs Association}, New York City, New York (with Ryan Devlin).
+        \item[2023] \tab{}Organizer: Computational Approaches to Urban Planning and Management: Innovations and Challenges. Four sessions.  \textbf{Association of Collegiate Schools of Planning}, Chicago, Illinois.
+        \item[2023] \tab{}Co-organizer: Informal Work and Public Space during COVID-19. Five sessions. \textbf{Urban Affairs Association}, Nashville, Tennessee (with Ryan Devlin)
+    \end{tablist}
+
+    \subsection*{Manuscript Reviewer}
+    Berkeley Planning Journal (co‑editor 2021‑2022); Environment and Planning B: Urban Analytics and City Science; Regional Studies, Regional Science; Food Security; Journal of Urbanism: International Research on Placemaking and Urban Sustainability; Journal of Planning Education and Research; Housing Policy Debate; Transportation Review Board; Geographical Analysis
+
+    \subsection*{Memberships}
+Association of Collegiate Schools of Planning (ACSP)\\
+Urban Affairs Association (UAA)\\
+American Political Science Association (APSA)\\
+Latin American Studies Association (LASA)\\
+American Association of Geographers (AAG) 
+
+    
+    \subsection*{Volunteer Work}
+    \begin{tablist}
+    \item[2020‑2023] $\>$ $\>${}Women Leaders in STEM (US‑Mexico Leaders Network), Mentor
+    \item[2018] \tab{}$\>$  $\>$CompileHer (UChicago Tech Capstone), Instructor
+    \item[2018] \tab{}$\>$  $\>$Scopeathon (South Side Civic), Community Outreach
+    \item[2005] \tab{}$\>$  $\>$Alfabetiza! (ADECO), Instructor and Organizer
+    \end{tablist}
+    
+    \section*{Skills}
+\textbf{Statistical Analysis and Computation:} Python, R, STATA, PostgreSQL, Google Cloud Console  
+
+\textbf{Spatial Analysis and GIS:} GeoDa, QGIS, ArcGIS, PostGIS, Google Earth Engine  
+
+\textbf{General Tools:} MS Office, LaTeX, Git  
+
+\textbf{Languages:} Spanish, English, German (A2), French (A1)
+
+
+    \section*{References}
+
+\textbf{Andrew Greenlee}. Professor of Urban and Regional Planning at University of Illinois, Urbana-Champaign (agreen4@illinois.edu).  
+
+\vspace{1em}  
+    
+\textbf{Alison Post}. Professor of Political Science at University of California, Berkeley (aepost@berkeley.edu).  
+
+
+\vspace{1em}  
+\textbf{Daniel Rodriguez}. Professor of City and Regional Planning at University of California, Berkeley (danrod@berkeley.edu)  
+
+\vspace{1em}  
+    
+\textbf{Carolina Reid}. Professor of City and Regional Planning at University of California, Berkeley (c\_reid@berkeley.edu)  
+
+\vspace{1em}  
+    
+\textbf{Luc Anselin}. Professor of Sociology and Director of Center for Spatial Data Science at University of Chicago (anselin@uchicago.edu)
+    
+\end{document}
